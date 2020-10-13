@@ -1,0 +1,13 @@
+<layout id="WatchFace">
+    <label id="UnixDisplay" x="center" y="10%" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_DK_GREEN" />
+    <drawable id="TimeBorder" />
+    <drawable id="WeekdayDots" class="WeekdayDots">
+        <param name="xPct">20</param>
+        <param name="yPct">30</param>
+        <param name="widthPct">60</param>
+        <param name="heightPct">5</param>
+        <param name="color">Graphics.COLOR_RED</param>
+    </drawable>
+    <label id="DateDisplay" x="center" y="35%" font="Graphics.FONT_LARGE" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_YELLOW" />
+    <label id="TimeDisplay" x="center" y="50%" font="Graphics.FONT_NUMBER_MEDIUM" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
+</layout>

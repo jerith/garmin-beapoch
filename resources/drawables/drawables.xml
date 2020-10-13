@@ -1,0 +1,6 @@
+<drawables>
+    <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+    <drawable-list id="TimeBorder">
+        <shape type="rectangle" x="15%" y="25%" width="70%" height="50%" corner_radius="10" color="Graphics.COLOR_TRANSPARENT" border_width="2" border_color="Graphics.COLOR_DK_GRAY" />
+    </drawable-list>
+</drawables>
