@@ -10,4 +10,10 @@
     </drawable>
     <label id="DateDisplay" x="center" y="35%" font="Graphics.FONT_LARGE" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_YELLOW" />
     <label id="TimeDisplay" x="center" y="50%" font="Graphics.FONT_NUMBER_MEDIUM" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
+    <label id="StepsDisplay" x="center" y="80%" font="Graphics.FONT_NUMBER_MILD" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_PURPLE" />
+    <drawable id="AnalogTime" class="AnalogTime">
+        <param name="cHour">Graphics.COLOR_BLUE</param>
+        <param name="cMin">Graphics.COLOR_BLUE</param>
+        <param name="cSec">0xffff00</param>
+    </drawable>
 </layout>

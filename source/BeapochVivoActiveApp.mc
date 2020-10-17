@@ -2,8 +2,11 @@ using Toybox.Application;
 
 class BeapochVivoActiveApp extends Application.AppBase {
 
+    private var mainView;
+
     function initialize() {
         AppBase.initialize();
+        mainView = new BeapochVivoActiveView();
     }
 
     // onStart() is called on application start up
@@ -16,7 +19,10 @@ class BeapochVivoActiveApp extends Application.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() {
-        return [ new BeapochVivoActiveView() ];
+        return [ mainView ];
     }
 
+    function onSettingsChanged() {
+        mainView.applySettings(self);
+    }
 }
