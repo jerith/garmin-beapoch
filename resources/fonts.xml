@@ -1,0 +1,3 @@
+<fonts>
+    <font id="NumberSymbols" filename="NumberSymbols.fnt" filter="0123456789:.-/ sh" />
+</fonts>

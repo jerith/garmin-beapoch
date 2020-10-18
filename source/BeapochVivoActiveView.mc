@@ -2,6 +2,10 @@ using Toybox.WatchUi;
 using Toybox.Graphics;
 using Toybox.System;
 using Toybox.Lang;
+using Toybox.Time;
+using Toybox.ActivityMonitor;
+
+const DURATION_MINUTE = new Time.Duration(60);
 
 class BeapochVivoActiveView extends WatchUi.WatchFace {
 
@@ -24,6 +28,10 @@ class BeapochVivoActiveView extends WatchUi.WatchFace {
 
         if (awake) {
             View.findDrawableById("UnixDisplay").setText(now.value().format("%d"));
+            View.findDrawableById("AnalogTime").setDrawSec(true);
+        } else {
+            View.findDrawableById("UnixDisplay").setText("");
+            View.findDrawableById("AnalogTime").setDrawSec(false);
         }
         View.findDrawableById("WeekdayDots").setWeekday(ginfo.day_of_week);
         var dateString = Lang.format("$1$-$2$-$3$", [ginfo.year, ginfo.month.format("%02d"), ginfo.day.format("%02d")]);
@@ -32,27 +40,38 @@ class BeapochVivoActiveView extends WatchUi.WatchFace {
         var timeString = Lang.format("$1$:$2$:$3$", [ginfo.hour.format("%02d"), ginfo.min.format("%02d"), secs]);
         View.findDrawableById("TimeDisplay").setText(timeString);
 
-//        var ainfo = ActivityMonitor.getInfo();
-//        View.findDrawableById("StepsDisplay").setText(ainfo.steps.format("%d"));
+        var amInfo = ActivityMonitor.getInfo();
+        View.findDrawableById("StepsDisplay").setText(Lang.format("s $1$", [amInfo.steps.format("%d")]));
+        var hrText = getRecentHeartRate(now.subtract(DURATION_MINUTE));
+        View.findDrawableById("HRDisplay").setText(hrText);
 
         View.onUpdate(dc);
     }
 
     function onExitSleep() {
         awake = true;
-        View.findDrawableById("AnalogTime").setDrawSec(true);
         requestUpdate();
     }
 
     function onEnterSleep() {
         awake = false;
-        // Clear displays we don't use while asleep.
-        View.findDrawableById("UnixDisplay").setText("");
-        View.findDrawableById("AnalogTime").setDrawSec(false);
         requestUpdate();
     }
 
     function applySettings(app) {
         View.findDrawableById("AnalogTime").setEnabled(app.getProperty("ShowAnalog"));
     }
+}
+
+function getRecentHeartRate(earliest) {
+    // Make sure we get a recent, valid heart rate value.
+    var hrIter = ActivityMonitor.getHeartRateHistory(5, true);
+    var hrSample = hrIter.next();
+    while (hrSample != null && hrSample.when.greaterThan(earliest)) {
+        if (hrSample.heartRate != ActivityMonitor.INVALID_HR_SAMPLE) {
+            return Lang.format("h $1$", [hrSample.heartRate.format("%d")]);
+        }
+        hrSample = hrIter.next();
+    }
+    return "h - -";
 }
